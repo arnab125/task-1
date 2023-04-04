@@ -12,11 +12,13 @@ from .serializers import DoctorSerializer
 def check_credentials(username, password):
     try:
         user = Doctor.objects.get(username=username)
+
+        if user.password == password:
+            return user
+        else:
+            return None
     except Doctor.DoesNotExist:
         return None
-    if user.check_password(password):
-        return user
-    return None
 
 @api_view(['POST'])
 def signin(request):
@@ -24,9 +26,9 @@ def signin(request):
     password = request.data.get('password')
     user = check_credentials(username, password)
     if user is not None:
-        login(request, user)
-        return Response({'username': user.username}, status=status.HTTP_200_OK)
-    return Response({'error': 'Invalid username or password'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'username': user.username,'catagory':user.catagory}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Invalid username or password'}, status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['POST'])
 def signup(request):

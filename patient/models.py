@@ -10,6 +10,7 @@ class Patient(AbstractUser):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     pincode = models.CharField(max_length=100)
+    catagory = models.CharField(max_length=100, default='patient')
 
     groups = models.ManyToManyField(
         Group,

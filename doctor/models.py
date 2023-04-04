@@ -11,6 +11,7 @@ class Doctor(AbstractUser):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     pincode = models.CharField(max_length=100)
+    catagory = models.CharField(max_length=100, default='doctor')
 
     groups = models.ManyToManyField(
         Group,
@@ -28,6 +29,4 @@ class Doctor(AbstractUser):
         return self.username
 
 
-from django.db import models
 
-# Create your models here.
